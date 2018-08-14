@@ -78,12 +78,14 @@ class TrackDirection extends Component<Props> {
         FusedLocation.startLocationUpdates();
         // Place listeners.
         this.subscription = FusedLocation.on("fusedLocation", location => {
+          this.setState({ lat: location.latitude, lng: location.longitude });
+
           if (startTracking) {
             this.props.getRoute(
-              { lat: latitude, lng: longitude },
+              { lat: this.state.lat, lng: this.state.lng },
               {
-                lat: this.state.location.latitude,
-                lng: this.state.location.longitude
+                lat: this.state.des.latitude,
+                lng: this.state.des.longitude
               }
             );
           }
